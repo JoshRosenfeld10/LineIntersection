@@ -19,70 +19,226 @@
      <layout class="QFormLayout" name="formLayout_2">
       <item row="0" column="0">
        <widget class="QLabel" name="label">
+        <property name="whatsThis">
+         <string extracomment="haha"/>
+        </property>
         <property name="text">
-         <string>p1:</string>
+         <string>P1:</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QSpinBox" name="p1x"/>
-      </item>
-      <item row="1" column="1">
-       <widget class="QSpinBox" name="p1y"/>
-      </item>
-      <item row="2" column="1">
-       <widget class="QSpinBox" name="p1z"/>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>p2:</string>
+       <widget class="ctkSliderWidget" name="p1XSlider">
+        <property name="singleStep">
+         <double>0.500000000000000</double>
+        </property>
+        <property name="minimum">
+         <double>-100.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>100.000000000000000</double>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QSpinBox" name="p2x"/>
+      <item row="1" column="1">
+       <widget class="ctkSliderWidget" name="p1YSlider">
+        <property name="singleStep">
+         <double>0.500000000000000</double>
+        </property>
+        <property name="minimum">
+         <double>-100.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>100.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="ctkSliderWidget" name="p1ZSlider">
+        <property name="singleStep">
+         <double>0.500000000000000</double>
+        </property>
+        <property name="minimum">
+         <double>-100.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>100.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>P2:</string>
+        </property>
+       </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QSpinBox" name="p2y"/>
+       <widget class="ctkSliderWidget" name="p2XSlider">
+        <property name="singleStep">
+         <double>0.500000000000000</double>
+        </property>
+        <property name="minimum">
+         <double>-100.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>100.000000000000000</double>
+        </property>
+       </widget>
       </item>
       <item row="5" column="1">
-       <widget class="QSpinBox" name="p2z"/>
+       <widget class="ctkSliderWidget" name="p2YSlider">
+        <property name="singleStep">
+         <double>0.500000000000000</double>
+        </property>
+        <property name="minimum">
+         <double>-100.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>100.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="ctkSliderWidget" name="p2ZSlider">
+        <property name="singleStep">
+         <double>0.500000000000000</double>
+        </property>
+        <property name="minimum">
+         <double>-100.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>100.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0" colspan="2">
+       <widget class="Line" name="line_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>d1:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="ctkSliderWidget" name="d1XSlider">
+        <property name="singleStep">
+         <double>0.010000000000000</double>
+        </property>
+        <property name="minimum">
+         <double>-1.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>1.000000000000000</double>
+        </property>
+        <property name="value">
+         <double>1.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="ctkSliderWidget" name="d1YSlider">
+        <property name="singleStep">
+         <double>0.010000000000000</double>
+        </property>
+        <property name="minimum">
+         <double>-1.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>1.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="1">
+       <widget class="ctkSliderWidget" name="d1ZSlider">
+        <property name="singleStep">
+         <double>0.010000000000000</double>
+        </property>
+        <property name="minimum">
+         <double>-1.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>1.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="11" column="0" colspan="2">
+       <widget class="Line" name="line_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="12" column="0">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>d2:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="12" column="1">
+       <widget class="ctkSliderWidget" name="d2XSlider">
+        <property name="singleStep">
+         <double>0.010000000000000</double>
+        </property>
+        <property name="minimum">
+         <double>-1.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>1.000000000000000</double>
+        </property>
+        <property name="value">
+         <double>1.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="13" column="1">
+       <widget class="ctkSliderWidget" name="d2YSlider">
+        <property name="singleStep">
+         <double>0.010000000000000</double>
+        </property>
+        <property name="minimum">
+         <double>-1.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>1.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="14" column="1">
+       <widget class="ctkSliderWidget" name="d2ZSlider">
+        <property name="singleStep">
+         <double>0.010000000000000</double>
+        </property>
+        <property name="minimum">
+         <double>-1.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>1.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_6">
-     <property name="text">
-      <string>d1:</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QSpinBox" name="d1x"/>
-   </item>
-   <item>
-    <widget class="QSpinBox" name="d1y"/>
-   </item>
-   <item>
-    <widget class="QSpinBox" name="d1z"/>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_7">
-     <property name="text">
-      <string>d2:</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QSpinBox" name="d2x"/>
-   </item>
-   <item>
-    <widget class="QSpinBox" name="d2y"/>
-   </item>
-   <item>
-    <widget class="QSpinBox" name="d2z"/>
    </item>
    <item>
     <widget class="ctkCollapsibleButton" name="outputsCollapsibleButton">
@@ -173,6 +329,11 @@
    <extends>QWidget</extends>
    <header>ctkCollapsibleButton.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ctkSliderWidget</class>
+   <extends>QWidget</extends>
+   <header>ctkSliderWidget.h</header>
   </customwidget>
   <customwidget>
    <class>qMRMLWidget</class>
