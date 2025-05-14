@@ -17,7 +17,7 @@ class LineIntersection(ScriptedLoadableModule):
         super().__init__(parent)
         parent.title = "Line Intersection"
         parent.categories = ["Examples"]
-        parent.contributors = ["Your Name"]
+        parent.contributors = ["Josh Rosenfeld (Perk Lab)"]
         parent.helpText = (
             "Compute the closest point between two lines defined by two points "
             "and direction vectors."
