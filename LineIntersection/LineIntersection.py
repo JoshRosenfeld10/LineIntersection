@@ -1,4 +1,3 @@
-# LineIntersection.py
 import numpy as np
 import slicer
 import qt
@@ -46,12 +45,15 @@ class LineIntersectionWidget(ScriptedLoadableModuleWidget):
 
         # Find or create fiducial node
         fn = slicer.mrmlScene.GetFirstNodeByName("LineIntersectionPoints")
+
+        # If fiducial node isn't found, create a new one
         if not fn:
             fn = slicer.mrmlScene.AddNewNodeByClass(
                 "vtkMRMLMarkupsFiducialNode", "LineIntersectionPoints"
             )
             for _ in range(3):
                 fn.AddControlPoint(0.0, 0.0, 0.0)
+
         # lock P3 so it’s read-only in the scene
         fn.SetNthControlPointLocked(2, True)
         self.parameterNode.points = fn
@@ -112,6 +114,7 @@ class LineIntersectionWidget(ScriptedLoadableModuleWidget):
             slicer.vtkMRMLMarkupsNode.PointModifiedEvent,
             self.onMarkupModified
         )
+
         # Slider connections
         allSliders = (
             self.p1Sliders
@@ -130,75 +133,100 @@ class LineIntersectionWidget(ScriptedLoadableModuleWidget):
         """
         Called when the module widget is destroyed or reloaded. Safely remove observers.
         """
-        try:
-            if self.pointNodeObserver is not None:
-                self.pointNode.RemoveObserver(self.pointNodeObserver)
-                self.pointNodeObserver = None
-        except Exception:
-            pass
+        if self.pointNodeObserver is not None:
+            self.pointNode.RemoveObserver(self.pointNodeObserver)
+            self.pointNodeObserver = None
+
         super().cleanup()
 
     def onSliderModified(self, value):
+        """
+        Called from GUI connection whenever sliders are modified.
+        """
         if self._creating:
             return
         self.updateFromSliders()
 
     def onMarkupModified(self, caller, event):
+        """
+        Called from observer whenever markup points are modified.
+        """
         if self._creating:
             return
         self.updateFromMarkups()
 
     def updateFromSliders(self):
+        """
+        Update markups from slider values and compute P3.
+        """
         self._creating = True
+
         # Update P1, P2
         p1 = [s.value for s in self.p1Sliders]
         p2 = [s.value for s in self.p2Sliders]
         self.pointNode.SetNthControlPointPosition(0, *p1)
         self.pointNode.SetNthControlPointPosition(1, *p2)
+
         # Update directions in parameter node
         self.parameterNode.d1 = [s.value for s in self.d1Sliders]
         self.parameterNode.d2 = [s.value for s in self.d2Sliders]
+
         # Compute and set P3
-        p3 = self.logic.computeClosestPoint(
-            p1, self.parameterNode.d1, p2, self.parameterNode.d2
-        )
-        wasModifying = self.pointNode.StartModify()
-        self.pointNode.SetNthControlPointPosition(2, *p3)
-        self.pointNode.EndModify(wasModifying)
-        self.intersectionLabel.text = f"{tuple(round(x,2) for x in p3)}"
+        self.updateP3Position(p1, p2)
         self._creating = False
 
     def updateFromMarkups(self):
+        """
+        Update sliders from markup point positions and compute P3.
+        """
         self._creating = True
+
         # Read P1, P2 positions
         p1 = list(self.pointNode.GetNthControlPointPositionVector(0))
         p2 = list(self.pointNode.GetNthControlPointPositionVector(1))
+
+        # Set slider values from P1 and P2 positions
         for sl, v in zip(self.p1Sliders, p1):
             sl.value = v
         for sl, v in zip(self.p2Sliders, p2):
             sl.value = v
-        # Compute P3 and update scene and label
-        p3 = self.logic.computeClosestPoint(
+
+        # Compute and set P3
+        self.updateP3Position(p1, p2)
+        self._creating = False
+
+    def updateP3Position(self, p1, p2):
+        """
+        Computes P3 position as closest point of intersection between lines 
+        defined by (P1, d1) and (P2, d2) and updates position in scene.
+        """
+        p3 = self.logic.computeClosestPointOfIntersection(
             p1, self.parameterNode.d1, p2, self.parameterNode.d2
         )
         wasModifying = self.pointNode.StartModify()
         self.pointNode.SetNthControlPointPosition(2, *p3)
         self.pointNode.EndModify(wasModifying)
         self.intersectionLabel.text = f"{tuple(round(x,2) for x in p3)}"
-        self._creating = False
 
 
 class LineIntersectionLogic(ScriptedLoadableModuleLogic):
     def getParameterNode(self):
         return LineIntersectionParameterNode(super().getParameterNode())
 
-    def computeClosestPoint(self, p1, d1, p2, d2):
+    def computeClosestPointOfIntersection(self, p1, d1, p2, d2):
+        """
+        Computes and returns closest point of intersection between lines defined by
+        (P1, d1) and (P2, d2).
+        """
         # If either direction vector is zero, default intersection to origin
+        # to avoid dividing by zero
         if np.linalg.norm(d1) == 0 or np.linalg.norm(d2) == 0:
             return [0.0, 0.0, 0.0]
 
         # Convert to numpy arrays
         p1, p2, d1, d2 = map(np.array, (p1, p2, d1, d2), [float] * 4)
+
+        # Compute closest point of intersection
         cross = np.cross(d1, d2)
         denom = np.linalg.norm(cross) ** 2
         if denom == 0:
@@ -210,4 +238,5 @@ class LineIntersectionLogic(ScriptedLoadableModuleLogic):
             c1 = p1 + t1 * d1
             c2 = p2 + t2 * d2
             closest = (c1 + c2) / 2.0
+
         return closest.tolist()
